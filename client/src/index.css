@@ -19,16 +19,17 @@
     --bright-red: #E7473C;
 }
 
-body {
+/* body {
     background-color: var(--white-smoke);
 
-}
+} */
 
 .header {
 
     margin-bottom: 50px;
+
     /* background-image: linear-gradient(to bottom, #96c2db, #96c2db, #96c2db, #96c2db, #96c2db, #a0c5de, #aac9e1, #b3cce3, #c6d4e7, #d7dcea, #e5e6ed, #f0f0f0); */
-    background-image: linear-gradient(to bottom, #aba5a5, #bcb7b8, #cccacb, #deddde, #f0f0f0);
+    /* background-image: linear-gradient(to bottom, #aba5a5, #bcb7b8, #cccacb, #deddde, #f0f0f0); */
 
 
 }
@@ -215,7 +216,7 @@ body {
 
 .comments .user-name {
     font-size: 1.3rem;
-    color: grey;
+    /* color: grey; */
 }
 
 .comments .comment {
@@ -225,77 +226,3 @@ body {
 
 
 /* footer styles */
-.bg-footer {
-    background-color: #33383c;
-    padding: 50px 0 30px;
-}
-
-.footer-heading {
-    letter-spacing: 2px;
-}
-
-.footer-link a {
-    color: #acacac;
-    line-height: 40px;
-    font-size: 14px;
-    transition: all 0.5s;
-}
-
-.footer-link a:hover {
-    color: #1bbc9b;
-}
-
-.contact-info {
-    color: #acacac;
-    font-size: 14px;
-}
-
-.footer-social-icon {
-    font-size: 15px;
-    height: 34px;
-    width: 34px;
-    line-height: 34px;
-    border-radius: 3px;
-    text-align: center;
-    display: inline-block;
-}
-
-.facebook {
-    background-color: #4e71a8;
-    color: #ffffff;
-}
-
-.twitter {
-    background-color: #55acee;
-    color: #ffffff;
-}
-
-.google {
-    background-color: #d6492f;
-    color: #ffffff;
-}
-
-.apple {
-    background-color: #424041;
-    color: #ffffff;
-}
-
-.footer-alt {
-    color: #acacac;
-}
-
-.footer-heading {
-    position: relative;
-    padding-bottom: 12px;
-}
-
-.footer-heading:after {
-    content: '';
-    width: 25px;
-    border-bottom: 1px solid #FFF;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    display: block;
-    border-bottom: 1px solid #1bbc9b;
-}

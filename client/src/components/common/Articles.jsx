@@ -43,16 +43,17 @@ function Articles() {
     setSelectedCategory(e.target.value)
   }
 
+  
   return (
-    <div className="container">
+    <div className="container py-5">
+      {/* Category Filter Dropdown */}
       <div className="mb-4">
-        {/* Category Filter Dropdown */}
-        <label htmlFor="category" className="form-label fw-bold">
+        <label htmlFor="category" className="form-label fw-bold text-dark">
           Select a category
         </label>
         <select
           id="category"
-          className="form-select"
+          className="form-select shadow-sm"
           value={selectedCategory}
           onChange={handleCategoryChange}
         >
@@ -62,10 +63,11 @@ function Articles() {
           <option value="database">Database</option>
         </select>
       </div>
-
+  
       {error && <p className="text-center text-danger">{error}</p>}
-
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+  
+      {/* Articles Grid */}
+      <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {/* Filtering articles based on selected category */}
         {articles
           .filter(
@@ -75,40 +77,47 @@ function Articles() {
           )
           .map((articleObj) => (
             <div className="col" key={articleObj.articleId}>
-              <div className="card h-100">
-                <div className="card-body">
-                  {/* Author Image */}
-                  <div className="author-details text-end">
-                    <img
-                      src={articleObj.authorData.profileImageUrl}
-                      width="40px"
-                      className="rounded-circle"
-                      alt=""
-                    />
-                    {/* Author Name */}
-                    <p>
-                      <small className="text-secondary">
-                        {articleObj.authorData.nameOfAuthor}
-                      </small>
-                    </p>
+              <div className="card shadow-lg border-light rounded-3 h-100">
+                <div className="card-body d-flex flex-column">
+                  {/* Author Details */}
+                  <div className="d-flex justify-content-between align-items-center mb-3">
+                    <div className="d-flex align-items-center">
+                      <img
+                        src={articleObj.authorData.profileImageUrl}
+                        width="40px"
+                        className="rounded-circle"
+                        alt="author"
+                      />
+                      <p className="ms-2 mb-0 text-muted">
+                        <small>{articleObj.authorData.nameOfAuthor}</small>
+                      </p>
+                    </div>
+                    {/* Article Category (text style without background) */}
+                    <span className="text-muted">{articleObj.category}</span>
                   </div>
+  
                   {/* Article Title */}
-                  <h5 className="card-title">{articleObj.title}</h5>
+                  <h5 className="card-title mb-3 text-truncate">{articleObj.title}</h5>
+  
                   {/* Article Content (Up to 80 chars) */}
-                  <p className="card-text">
+                  <p className="card-text text-muted mb-4 text-truncate">
                     {articleObj.content.substring(0, 80) + '....'}
                   </p>
-                  {/* Read More Button */}
-                  <button
-                    className="custom-btn btn-4"
-                    onClick={() => goToArticleById(articleObj)}
-                  >
-                    Read more
-                  </button>
+  
+                  {/* Read More Button positioned to the left, no background */}
+                  <div className="d-flex justify-content-start mt-auto">
+                    <button
+                      className="btn btn-link p-0 text-primary"
+                      onClick={() => goToArticleById(articleObj)}
+                    >
+                      Read more
+                    </button>
+                  </div>
                 </div>
-                <div className="card-footer">
-                  {/* Article's Date of Modification */}
-                  <small className="text-body-secondary">
+  
+                {/* Article's Date of Modification */}
+                <div className="card-footer bg-light border-0">
+                  <small className="text-muted">
                     Last updated on {articleObj.dateOfModification}
                   </small>
                 </div>
@@ -117,7 +126,8 @@ function Articles() {
           ))}
       </div>
     </div>
-  )
+  );
+  
 }
 
 export default Articles
