@@ -7,13 +7,18 @@ const adminApp = require("./APIs/adminAPI");
 const authorApp = require("./APIs/authorAPI");
 const cors = require("cors");
 app.use(cors());
+app.set("trust proxy", true);
 const port = process.env.PORT || 4000;
+
+app.get("/", (req, res) => {
+  res.send("koushikvlog API is running");
+});
 
 mongoose
   .connect(process.env.DBURL)
 
   .then(() => {
-    app.listen(port, () => console.log("Connected to server", port));
+    app.listen(port, "0.0.0.0", () => console.log("Connected to server", port));
     console.log("Database connection successful");
   })
   .catch((err) => {
