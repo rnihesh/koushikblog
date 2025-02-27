@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@clerk/clerk-react'
 import { useForm } from 'react-hook-form' // for form handling
 
+import { getBaseUrl } from "../../utils/config.js";
 function Articles() {
   const [articles, setArticles] = useState([])
   const [error, setError] = useState('')
@@ -17,7 +18,7 @@ function Articles() {
   // get all articles
   async function getArticles() {
     const token = await getToken()
-    let res = await axios.get('http://localhost:3000/author-api/articles', {
+    let res = await axios.get(`${getBaseUrl()}/author-api/articles`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

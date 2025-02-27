@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
+
+import { getBaseUrl } from "../../utils/config.js";
 function ArticleByID() {
   const { state } = useLocation();
   const { currentUser } = useContext(userAuthorContextObj);
@@ -32,7 +34,7 @@ function ArticleByID() {
       "-" +
       currentDate.getFullYear();
     let res = await axios.put(
-      `http://localhost:3000/author-api/article/${articleAfterChanges.articleId}`,
+      `${getBaseUrl()}0/author-api/article/${articleAfterChanges.articleId}`,
       articleAfterChanges,
       {
         headers: {
@@ -52,7 +54,7 @@ function ArticleByID() {
     commentObj.nameOfUser = currentUser.firstName;
     console.log(commentObj);
     let res = await axios.put(
-      `http://localhost:3000/user-api/comment/${currentArticle.articleId}`,
+      `${getBaseUrl()}/user-api/comment/${currentArticle.articleId}`,
       commentObj
     );
     if (res.data.message === "comment added") {
@@ -63,7 +65,7 @@ function ArticleByID() {
   async function deleteArticle() {
     state.isArticleActive = false;
     let res = await axios.put(
-      `http://localhost:3000/author-api/articles/${state.articleId}`,
+      `${getBaseUrl()}/author-api/articles/${state.articleId}`,
       state
     );
     if (res.data.message == "Article deleted or restored") {
@@ -74,7 +76,7 @@ function ArticleByID() {
   async function restoreArticle() {
     state.isArticleActive = true;
     let res = await axios.put(
-      `http://localhost:3000/author-api/articles/${state.articleId}`,
+      `${getBaseUrl()}/author-api/articles/${state.articleId}`,
       state
     );
     if (res.data.message == "Article deleted or restored") {

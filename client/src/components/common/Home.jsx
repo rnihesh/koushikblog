@@ -6,6 +6,7 @@ import { useUser, useAuth } from "@clerk/clerk-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import { getBaseUrl } from "../../utils/config.js";
 function Home() {
   const { currentUser, setCurrentUser } = useContext(userAuthorContextObj);
   const { currentAdmin, setCurrentAdmin } = useContext(adminContextObj);
@@ -29,7 +30,7 @@ function Home() {
     try {
       if (selectedRole === "author") {
         res = await axios.post(
-          "http://localhost:3000/author-api/author",
+          `${getBaseUrl()}/author-api/author`,
           currentUser
         );
         let { message, payload } = res.data;
@@ -46,7 +47,7 @@ function Home() {
       }
       if (selectedRole === "user") {
         res = await axios.post(
-          "http://localhost:3000/user-api/user",
+          `${getBaseUrl()}/user-api/user`,
           currentUser
         );
         let { message, payload } = res.data;
@@ -63,7 +64,7 @@ function Home() {
       }
       if (selectedRole === "admin") {
         res = await axios.post(
-          "http://localhost:3000/admin-api/admin",
+          `${getBaseUrl()}/admin-api/admin`,
           currentAdmin
         );
         let { message, payload } = res.data;
