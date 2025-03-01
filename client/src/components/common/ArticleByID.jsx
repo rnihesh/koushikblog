@@ -22,6 +22,33 @@ function ArticleByID() {
   function enableEdit() {
     setEditArticleStatus(true);
   }
+  // async function onSave(modifiedArticle) {
+  //   const articleAfterChanges = { ...state, ...modifiedArticle };
+  //   const token = await getToken();
+  //   const currentDate = new Date();
+  //   //change date of mofification
+  //   articleAfterChanges.dateOfModification =
+  //     currentDate.getDate() +
+  //     "-" +
+  //     currentDate.getMonth() +
+  //     "-" +
+  //     currentDate.getFullYear();
+  //   let res = await axios.put(
+  //     `${getBaseUrl()}/author-api/article/${articleAfterChanges.articleId}`,
+  //     articleAfterChanges,
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     }
+  //   );
+  //   if (res.data.message == "Article modified") {
+  //     setEditArticleStatus(false);
+  //     navigate(`/author-profile/articles/${state.articleId}`, {
+  //       state: res.data.payload,
+  //     });
+  //   }
+  // }
   async function onSave(modifiedArticle) {
     const articleAfterChanges = { ...state, ...modifiedArticle };
     const token = await getToken();
@@ -32,7 +59,12 @@ function ArticleByID() {
       "-" +
       currentDate.getMonth() +
       "-" +
-      currentDate.getFullYear();
+      currentDate.getFullYear() +
+      " " +
+      currentDate.toLocaleTimeString("en-US", { hour12: true });
+    // console.log(articleAfterChanges);
+
+    //make http post request
     let res = await axios.put(
       `${getBaseUrl()}/author-api/article/${articleAfterChanges.articleId}`,
       articleAfterChanges,
@@ -42,13 +74,19 @@ function ArticleByID() {
         },
       }
     );
-    if (res.data.message == "Article modified") {
+
+    if (res.data.message === "Article modified") {
+      //change edit article status to false
       setEditArticleStatus(false);
-      navigate(`/author-profile/articles/${state.articleId}`, {
+      navigate(`/author-profile/articles/`, {
         state: res.data.payload,
       });
     }
+
+    // console.log(modifiedArticle);
   }
+
+
 
   async function addComment(commentObj) {
     commentObj.nameOfUser = currentUser.firstName;
