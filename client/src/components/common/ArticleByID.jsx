@@ -22,6 +22,33 @@ function ArticleByID() {
   function enableEdit() {
     setEditArticleStatus(true);
   }
+  // async function onSave(modifiedArticle) {
+  //   const articleAfterChanges = { ...state, ...modifiedArticle };
+  //   const token = await getToken();
+  //   const currentDate = new Date();
+  //   //change date of mofification
+  //   articleAfterChanges.dateOfModification =
+  //     currentDate.getDate() +
+  //     "-" +
+  //     currentDate.getMonth() +
+  //     "-" +
+  //     currentDate.getFullYear();
+  //   let res = await axios.put(
+  //     `${getBaseUrl()}/author-api/article/${articleAfterChanges.articleId}`,
+  //     articleAfterChanges,
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     }
+  //   );
+  //   if (res.data.message == "Article modified") {
+  //     setEditArticleStatus(false);
+  //     navigate(`/author-profile/articles/${state.articleId}`, {
+  //       state: res.data.payload,
+  //     });
+  //   }
+  // }
   async function onSave(modifiedArticle) {
     const articleAfterChanges = { ...state, ...modifiedArticle };
     const token = await getToken();
@@ -32,9 +59,14 @@ function ArticleByID() {
       "-" +
       currentDate.getMonth() +
       "-" +
-      currentDate.getFullYear();
+      currentDate.getFullYear() +
+      " " +
+      currentDate.toLocaleTimeString("en-US", { hour12: true });
+    // console.log(articleAfterChanges);
+
+    //make http post request
     let res = await axios.put(
-      `${getBaseUrl()}0/author-api/article/${articleAfterChanges.articleId}`,
+      `${getBaseUrl()}/author-api/article/${articleAfterChanges.articleId}`,
       articleAfterChanges,
       {
         headers: {
@@ -42,13 +74,19 @@ function ArticleByID() {
         },
       }
     );
-    if (res.data.message == "Article modified") {
+
+    if (res.data.message === "Article modified") {
+      //change edit article status to false
       setEditArticleStatus(false);
-      navigate(`/author-profile/articles/${state.articleId}`, {
+      navigate(`/author-profile/articles/`, {
         state: res.data.payload,
       });
     }
+
+    // console.log(modifiedArticle);
   }
+
+
 
   async function addComment(commentObj) {
     commentObj.nameOfUser = currentUser.firstName;
@@ -118,34 +156,27 @@ function ArticleByID() {
 
               {/* Actions (Edit/Delete) Buttons - Aligned Right */}
               {currentUser.role === "author" &&
-                currentUser.email === state.authorData.email &&
-                (
-                    <div className="d-flex justify-content-end">
-                      {/* Edit Button */}
-                      <button
-                        className="btn btn-light me-2"
-                        onClick={enableEdit}
-                      >
-                        <FaEdit className="text-warning" />
+                currentUser.email === state.authorData.email && (
+                  <div className="d-flex justify-content-end">
+                    {/* Edit Button */}
+                    <button className="btn btn-light me-2" onClick={enableEdit}>
+                      <FaEdit className="text-warning" />
+                    </button>
+                    {/* Delete or Restore Button */}
+                    {state.isArticleActive ? (
+                      <button className="btn btn-light" onClick={deleteArticle}>
+                        <MdDelete className="text-danger fs-4" />
                       </button>
-                      {/* Delete or Restore Button */}
-                      {state.isArticleActive ? (
-                        <button
-                          className="btn btn-light"
-                          onClick={deleteArticle}
-                        >
-                          <MdDelete className="text-danger fs-4" />
-                        </button>
-                      ) : (
-                        <button
-                          className="btn btn-light"
-                          onClick={restoreArticle}
-                        >
-                          <MdRestore className="text-info fs-4" />
-                        </button>
-                      )}
-                    </div>
-                  )}
+                    ) : (
+                      <button
+                        className="btn btn-light"
+                        onClick={restoreArticle}
+                      >
+                        <MdRestore className="text-info fs-4" />
+                      </button>
+                    )}
+                  </div>
+                )}
 
               {/* Article Content */}
               <p
