@@ -23,7 +23,7 @@ authorApp.post(
 authorApp.get(
   "/articles",requireAuth({signInUrl:"unauthorized"}),
   expressAsyncHandler(async (req, res) => {
-    let listOfArticles = await Article.find();
+    let listOfArticles = await Article.find({ isArticleActive: true });
     res.status(200).send({ message: "articles", payload: listOfArticles });
   })
 );
