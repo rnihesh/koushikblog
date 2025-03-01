@@ -34,7 +34,7 @@ function ArticleByID() {
       "-" +
       currentDate.getFullYear();
     let res = await axios.put(
-      `${getBaseUrl()}0/author-api/article/${articleAfterChanges.articleId}`,
+      `${getBaseUrl()}/author-api/article/${articleAfterChanges.articleId}`,
       articleAfterChanges,
       {
         headers: {
@@ -118,34 +118,27 @@ function ArticleByID() {
 
               {/* Actions (Edit/Delete) Buttons - Aligned Right */}
               {currentUser.role === "author" &&
-                currentUser.email === state.authorData.email &&
-                (
-                    <div className="d-flex justify-content-end">
-                      {/* Edit Button */}
-                      <button
-                        className="btn btn-light me-2"
-                        onClick={enableEdit}
-                      >
-                        <FaEdit className="text-warning" />
+                currentUser.email === state.authorData.email && (
+                  <div className="d-flex justify-content-end">
+                    {/* Edit Button */}
+                    <button className="btn btn-light me-2" onClick={enableEdit}>
+                      <FaEdit className="text-warning" />
+                    </button>
+                    {/* Delete or Restore Button */}
+                    {state.isArticleActive ? (
+                      <button className="btn btn-light" onClick={deleteArticle}>
+                        <MdDelete className="text-danger fs-4" />
                       </button>
-                      {/* Delete or Restore Button */}
-                      {state.isArticleActive ? (
-                        <button
-                          className="btn btn-light"
-                          onClick={deleteArticle}
-                        >
-                          <MdDelete className="text-danger fs-4" />
-                        </button>
-                      ) : (
-                        <button
-                          className="btn btn-light"
-                          onClick={restoreArticle}
-                        >
-                          <MdRestore className="text-info fs-4" />
-                        </button>
-                      )}
-                    </div>
-                  )}
+                    ) : (
+                      <button
+                        className="btn btn-light"
+                        onClick={restoreArticle}
+                      >
+                        <MdRestore className="text-info fs-4" />
+                      </button>
+                    )}
+                  </div>
+                )}
 
               {/* Article Content */}
               <p
