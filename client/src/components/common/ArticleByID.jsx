@@ -86,7 +86,7 @@ function ArticleByID() {
   return (
     <div className="container py-5">
       {editArticelStatus == false ? (
-        <> 
+        <>
           {/* Full Article Display */}
           <div className="card shadow-lg rounded-3">
             <div className="card-body">
@@ -117,24 +117,35 @@ function ArticleByID() {
               </div>
 
               {/* Actions (Edit/Delete) Buttons - Aligned Right */}
-              {currentUser.role === "author" && (
-                <div className="d-flex justify-content-end">
-                  {/* Edit Button */}
-                  <button className="btn btn-light me-2" onClick={enableEdit}>
-                    <FaEdit className="text-warning" />
-                  </button>
-                  {/* Delete or Restore Button */}
-                  {state.isArticleActive ? (
-                    <button className="btn btn-light" onClick={deleteArticle}>
-                      <MdDelete className="text-danger fs-4" />
-                    </button>
-                  ) : (
-                    <button className="btn btn-light" onClick={restoreArticle}>
-                      <MdRestore className="text-info fs-4" />
-                    </button>
+              {currentUser.role === "author" &&
+                currentUser.email === state.authorData.email &&
+                (
+                    <div className="d-flex justify-content-end">
+                      {/* Edit Button */}
+                      <button
+                        className="btn btn-light me-2"
+                        onClick={enableEdit}
+                      >
+                        <FaEdit className="text-warning" />
+                      </button>
+                      {/* Delete or Restore Button */}
+                      {state.isArticleActive ? (
+                        <button
+                          className="btn btn-light"
+                          onClick={deleteArticle}
+                        >
+                          <MdDelete className="text-danger fs-4" />
+                        </button>
+                      ) : (
+                        <button
+                          className="btn btn-light"
+                          onClick={restoreArticle}
+                        >
+                          <MdRestore className="text-info fs-4" />
+                        </button>
+                      )}
+                    </div>
                   )}
-                </div>
-              )}
 
               {/* Article Content */}
               <p
